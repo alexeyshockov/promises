@@ -93,8 +93,14 @@ final class CoroutineInvocation implements PromiseInterface
 
     private function nextCoroutine($yielded)
     {
-        $this->currentPromise = $this->promiseFor($yielded)
-            ->then([$this, '_handleSuccess'], [$this, '_handleFailure']);
+        if (is_object($yielded) && ($yielded instanceof CoroutineResult)) {
+            $this->result->resolve($yielded->value());
+
+            // The end.
+        } else {
+            $this->currentPromise = $this->promiseFor($yielded)
+                ->then([$this, '_handleSuccess'], [$this, '_handleFailure']);
+        }
     }
 
     /**

@@ -478,3 +478,13 @@ function coroutine_invocation(\Generator $generator)
 {
     return new CoroutineInvocation($generator);
 }
+
+/**
+ * @param mixed $value
+ *
+ * @return CoroutineResult
+ */
+function coroutine_result($value)
+{
+    return new CoroutineResult($value);
+}
